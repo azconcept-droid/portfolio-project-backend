@@ -1,13 +1,16 @@
+"use strict"
+
 require("dotenv").config({ path: `${process.cwd()}/.env` });
 const express = require("express");
 const cors = require("cors");
 const sequelize = require("./config/db");
 const bodyParser = require("body-parser");
 const signupRouter = require("./routes/signupRoute");
+const loginRouter = require("./routes/loginRoute");
 const globalErrorHandler = require("./utils/errorHandler");
 const catchAsync = require("./utils/catchAsync");
 const ApiError = require("./utils/apiError");
-// require("./config/swagger")
+// require("./config/swagger");
 
 const port = process.env.PORT || 4000; // Use the provided port from env or default to 3000
 
@@ -37,8 +40,11 @@ app.get("/api/v1/status", (req, res) => {
 	});
 });
 
-// signup enpoint
+// signup endpoint
 app.use("/api/v1", signupRouter);
+
+// login endpoint
+app.use("/api/v1", loginRouter);
 
 // 404 route
 app.use(

@@ -1,15 +1,15 @@
 "use strict"
 
-const { signup } = require("../controllers/signup");
+const { login } = require("../controllers/login");
 
 const router = require("express").Router();
 
 /**
  * @swagger
- * /user/signup:
+ * /user/login:
  *   post:
  *     tags:
- *      - Signup
+ *      - login
  *     summary: Create new talent
  *     description: Create new talent who can login
  *     requestBody:
@@ -27,8 +27,8 @@ const router = require("express").Router();
  *            type: string
  *     responses:
  *      200:
- *        description: User created successfully...
+ *        description: User logged in successfully...
  */
-router.route("/user/signup").post(signup);
+router.route("/user/login").post(login);
 
 module.exports = router;

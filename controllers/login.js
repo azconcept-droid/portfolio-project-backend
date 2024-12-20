@@ -31,7 +31,6 @@ const login = catchAsync(async (req, res, next) => {
 		return next(new ApiError("User not found, please signup", 404));
 	}
 
-  console.log(password, userLogin.password)
   const isPasswordMatched = await bcrypt.compare(
 		password,
 		userLogin.password,

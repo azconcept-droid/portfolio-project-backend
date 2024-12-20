@@ -56,6 +56,7 @@ const login = catchAsync(async (req, res, next) => {
 
   return res.json({
     status: "success",
+    message: "You logged in successfully",
     token
   })
 })

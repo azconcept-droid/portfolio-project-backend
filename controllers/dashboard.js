@@ -1,4 +1,5 @@
 const blog = require("../models/blogs");
+const post = require("../models/posts");
 const user = require("../models/users");
 const ApiError = require("../utils/apiError");
 const catchAsync = require("../utils/catchAsync");
@@ -13,6 +14,12 @@ const dashboard = catchAsync(async (req, res, next) => {
 		include: [
 			{
 				model: blog,
+				attributes: {
+					exclude: ["createdAt", "updatedAt", "deletedAt"],
+				},
+			},
+      {
+				model: post,
 				attributes: {
 					exclude: ["createdAt", "updatedAt", "deletedAt"],
 				},

@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const signupRouter = require("./routes/signupRoute");
 const loginRouter = require("./routes/loginRoute");
 const otpRouter = require("./routes/verifyEmailRoute");
+const resetPasswordRouter = require("./routes/resetPasswordRoute");
 const globalErrorHandler = require("./utils/errorHandler");
 const catchAsync = require("./utils/catchAsync");
 const ApiError = require("./utils/apiError");
@@ -49,6 +50,9 @@ app.use("/api/v1", loginRouter);
 
 // verify email endpoint
 app.use("/api/v1", otpRouter);
+
+// reset password endpoint
+app.use("/api/v1", resetPasswordRouter);
 
 // 404 route
 app.use(

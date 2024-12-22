@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const catchAsync = require("../utils/catchAsync");
 
 const authentication = catchAsync(async (req, res, next) => {
 	// 1. get the token from headers

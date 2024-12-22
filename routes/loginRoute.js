@@ -23,8 +23,6 @@ const router = require("express").Router();
  *            type: string
  *          password:
  *            type: string
- *          confirmPassword:
- *            type: string
  *     responses:
  *      200:
  *        description: User logged in successfully...

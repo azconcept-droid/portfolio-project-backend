@@ -4,7 +4,7 @@ const router = require("express").Router();
 
 /**
  * @swagger
- * /forgot-password:
+ * /user/forgot-password:
  *   post:
  *     tags:
  *      - User
@@ -31,7 +31,7 @@ router.route("/user/forgot-password").post(forgotPassword);
 
 /**
  * @swagger
- * /reset-password:
+ * /user/reset-password:
  *   post:
  *     tags:
  *      - User

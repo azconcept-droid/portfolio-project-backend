@@ -7,9 +7,6 @@ const catchAsync = require("../utils/catchAsync");
 const dashboard = catchAsync(async (req, res, next) => {
 	const userId = req.user.id;
 
-  console.log(userId);
-  console.log("inside dashboard")
-
 	const userDashboard = await user.findByPk(userId, {
 		include: [
 			{

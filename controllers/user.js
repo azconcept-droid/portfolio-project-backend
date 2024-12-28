@@ -6,13 +6,44 @@ const blog = require("../models/blogs");
 const ApiError = require("../utils/apiError");
 const post = require("../models/posts");
 
+const createUser = catchAsync(async (req, res, next) => {
+  const { email, password, confirmPassword } = req.body;
+
+  if(!email || !password || !confirmPassword) {
+		throw new ApiError("email and password is required", 400);
+  }
+
+  // check if user already exists
+  const existingUser = await user.findOne({ where: { email }});
+
+  if (existingUser) {
+		return next(
+			new ApiError("You already signed up, please login.", 409),
+		);
+	}
+
+  const newUser = await user.create({
+    email,
+    password,
+    confirmPassword
+  }) 
+
+  if (!newUser) {
+    return next(new ApiError("Failed to create user", 500));
+  }
+
+  return res.status(200).json({
+		status: "success",
+		message: "Congratulations, you signed up successfully,",
+	});
+})
+
 const getUsers = catchAsync(async (req, res, next) => {
   const page = req.query.page || 1;
   const size = req.query.size || 10;
 
 	const { rows, count } = await user.findAndCountAll({
 		where: {
-			// isVerified: isVerifiedUser,
 			userType: {
 				[Sequelize.Op.ne]: "admin",
 			},
@@ -25,7 +56,6 @@ const getUsers = catchAsync(async (req, res, next) => {
 				"password",
 				"resetPasswordToken",
 				"resetPasswordExpires",
-				"updatedAt",
 				"deletedAt",
 			],
 		},
@@ -87,6 +117,8 @@ const getUserById = catchAsync(async (req, res, next) => {
 const updateUser = catchAsync(async (req, res, next) => {
 	const userId = req.user.id;
 	const id = req.params.id;
+
+  console.log(userId, id)
 	const {
 		firstName,
 		lastName,
@@ -169,6 +201,7 @@ const deleteUserById = catchAsync(async (req, res, next) => {
 });
 
 module.exports = {
+  createUser,
 	getUsers,
 	getUserById,
 	updateUser,

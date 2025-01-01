@@ -1,3 +1,4 @@
+require("dotenv").config({ path: `${process.cwd()}/.env` });
 const { Sequelize } = require("sequelize");
 const user = require("../models/users");
 const capitalizeFirstLetter = require("../utils/capitalizeFirstLetter");
@@ -26,10 +27,15 @@ const createUser = catchAsync(async (req, res, next) => {
     email,
     password,
     confirmPassword
-  }) 
+  })
 
   if (!newUser) {
     return next(new ApiError("Failed to create user", 500));
+  }
+
+  if (process.env.NODE_ENV === "local") {
+    newUser.isVerified = true;
+    await newUser.save()
   }
 
   return res.status(200).json({
@@ -118,7 +124,6 @@ const updateUser = catchAsync(async (req, res, next) => {
 	const userId = req.user.id;
 	const id = req.params.id;
 
-  console.log(userId, id)
 	const {
 		firstName,
 		lastName,
@@ -166,7 +171,7 @@ const updateUser = catchAsync(async (req, res, next) => {
 
 	return res.json({
 		status: "success",
-		message: "user updated successfully",
+		message: "user data updated successfully",
 	});
 });
 

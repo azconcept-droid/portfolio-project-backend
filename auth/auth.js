@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
 const catchAsync = require("../utils/catchAsync");
+const ApiError = require("../utils/apiError");
+const user = require("../models/users");
 
 const authentication = catchAsync(async (req, res, next) => {
 	// 1. get the token from headers
 	let idToken = "";
-	const user = req.query.user;
 
 	if (
 		req.headers.authorization &&

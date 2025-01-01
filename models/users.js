@@ -5,6 +5,8 @@ const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 const sequelize = require("../config/db");
 const ApiError = require("../utils/apiError");
+const blog = require("./blogs");
+const post = require("./posts");
 
 const user = sequelize.define(
 	"users",
@@ -195,5 +197,18 @@ const user = sequelize.define(
 		modelName: "users",
 	},
 );
+
+// user blog
+user.hasMany(blog, { foreignKey: "createdBy" });
+blog.belongsTo(user, {
+	foreignKey: "createdBy",
+});
+
+// user post
+user.hasMany(post, { foreignKey: "createdBy" });
+post.belongsTo(user, {
+	foreignKey: "createdBy",
+});
+
 
 module.exports = user;

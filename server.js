@@ -9,6 +9,8 @@ const signupRouter = require("./routes/signupRoute");
 const loginRouter = require("./routes/loginRoute");
 const otpRouter = require("./routes/verifyEmailRoute");
 const resetPasswordRouter = require("./routes/resetPasswordRoute");
+const dashboardRouter = require("./routes/dashboardRoute");
+const userRouter = require("./routes/userRoute");
 const globalErrorHandler = require("./utils/errorHandler");
 const catchAsync = require("./utils/catchAsync");
 const ApiError = require("./utils/apiError");
@@ -53,6 +55,12 @@ app.use("/api/v1", otpRouter);
 
 // reset password endpoint
 app.use("/api/v1", resetPasswordRouter);
+
+// dashboard endpoints
+app.use("/api/v1", dashboardRouter);
+
+// users endpoint
+app.use("/api/v1", userRouter);
 
 // 404 route
 app.use(

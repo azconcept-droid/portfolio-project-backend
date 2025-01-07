@@ -9,8 +9,6 @@ const post = require("../models/posts");
 const createPost = catchAsync(async (req, res, next) => {
   const {
     postImageUrl,
-    title,
-    description,
     property,
     price,
     city,
@@ -21,8 +19,6 @@ const createPost = catchAsync(async (req, res, next) => {
 
   const newPost = await post.create({
     createdBy: req.user.id,
-    title,
-    description,
     property,
     price,
     city,
@@ -119,16 +115,7 @@ const updatePost = catchAsync(async (req, res, next) => {
   const id = req.params.id;
 
   const {
-    firstName,
-    lastName,
-    avatar,
-    phoneNumber,
-    bio,
-    occupation,
-    yearsOfExperience,
-    country,
-    city,
-    state,
+
   } = req.body;
 
   const gender = capitalizeFirstLetter(req.body.gender);

@@ -7,6 +7,7 @@ const sequelize = require("./config/db");
 const bodyParser = require("body-parser");
 const signupRouter = require("./routes/signupRoute");
 const loginRouter = require("./routes/loginRoute");
+const logoutRouter = require("./routes/logoutRoute");
 const otpRouter = require("./routes/verifyEmailRoute");
 const resetPasswordRouter = require("./routes/resetPasswordRoute");
 const dashboardRouter = require("./routes/dashboardRoute");
@@ -50,6 +51,9 @@ app.use("/api/v1", signupRouter);
 
 // login endpoint
 app.use("/api/v1", loginRouter);
+
+// logout endpoint
+app.use("/api/v1", logoutRouter);
 
 // verify email endpoint
 app.use("/api/v1", otpRouter);

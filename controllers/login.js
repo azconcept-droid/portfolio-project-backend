@@ -54,9 +54,9 @@ const login = catchAsync(async (req, res, next) => {
 
   const result = userLogin.toJSON();
 
-  if (result.isVerified === false) {
-    return next(new ApiError("Please verify your email before login", 401));
-  }
+  // if (result.isVerified === false) {
+  //   return next(new ApiError("Please verify your email before login", 401));
+  // }
 
   // generate auth-token
   const token = generateToken({

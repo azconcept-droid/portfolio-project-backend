@@ -48,18 +48,6 @@ const post = sequelize.define(
       type: DataTypes.STRING,
       defaultValue: "",
     },
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "title cannot be null",
-        },
-        notEmpty: {
-          msg: "title cannot be empty",
-        },
-      },
-    },
     postImageUrl: {
       type: DataTypes.STRING,
       defaultValue: "",
@@ -106,18 +94,6 @@ const post = sequelize.define(
     },
     country: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "description cannot be null",
-        },
-        notEmpty: {
-          msg: "description cannot be empty",
-        },
-      },
-    },
-    description: {
-      type: DataTypes.TEXT,
       allowNull: false,
       validate: {
         notNull: {

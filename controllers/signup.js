@@ -7,33 +7,31 @@ const catchAsync = require("../utils/catchAsync");
 const signup = catchAsync(async (req, res, next) => {
   const { email, password, confirmPassword } = req.body;
 
-  if(!email || !password || !confirmPassword) {
-		throw new ApiError("email and password is required", 400);
+  if (!email || !password || !confirmPassword) {
+    throw new ApiError("email and password is required", 400);
   }
 
   // check if user already exists
-  const existingUser = await user.findOne({ where: { email }});
+  const existingUser = await user.findOne({ where: { email } });
 
   if (existingUser) {
-		return next(
-			new ApiError("You already signed up, please login.", 409),
-		);
-	}
+    return next(new ApiError("You already signed up, please login.", 409));
+  }
 
   const newUser = await user.create({
     email,
     password,
-    confirmPassword
-  }) 
+    confirmPassword,
+  });
 
   if (!newUser) {
     return next(new ApiError("Failed to create user", 500));
   }
 
   return res.status(200).json({
-		status: "success",
-		message: "Congratulations, you signed up successfully,",
-	});
-})
+    status: "success",
+    message: "Congratulations, you signed up successfully,",
+  });
+});
 
-module.exports = { signup }
+module.exports = { signup };

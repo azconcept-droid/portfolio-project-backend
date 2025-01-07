@@ -1,4 +1,7 @@
-const { forgotPassword, resetPassword } = require("../controllers/resetPassword");
+const {
+  forgotPassword,
+  resetPassword,
+} = require("../controllers/resetPassword");
 
 const router = require("express").Router();
 

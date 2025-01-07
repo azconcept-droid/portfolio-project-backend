@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const { signup } = require("../controllers/signup");
 

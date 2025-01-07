@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 require("dotenv").config({ path: `${process.cwd()}/.env` });
 const express = require("express");
@@ -11,6 +11,7 @@ const otpRouter = require("./routes/verifyEmailRoute");
 const resetPasswordRouter = require("./routes/resetPasswordRoute");
 const dashboardRouter = require("./routes/dashboardRoute");
 const userRouter = require("./routes/userRoute");
+const postRouter = require("./routes/postRoute");
 const globalErrorHandler = require("./utils/errorHandler");
 const catchAsync = require("./utils/catchAsync");
 const ApiError = require("./utils/apiError");
@@ -30,18 +31,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // root endpoint
 app.get("/api/v1/", (req, res) => {
-	res.status(200).json({
-		status: "success",
-		message: "Welcome to clozagent robust API.",
-	});
+  res.status(200).json({
+    status: "success",
+    message: "Welcome to clozagent robust API.",
+  });
 });
 
 // api status route
 app.get("/api/v1/status", (req, res) => {
-	res.status(200).json({
-		status: "success",
-		message: "clozagent api status is okay",
-	});
+  res.status(200).json({
+    status: "success",
+    message: "clozagent api status is okay",
+  });
 });
 
 // signup endpoint
@@ -62,12 +63,15 @@ app.use("/api/v1", dashboardRouter);
 // users endpoint
 app.use("/api/v1", userRouter);
 
+// posts endpoint
+app.use("/api/v1", postRouter);
+
 // 404 route
 app.use(
-	"*",
-	catchAsync(async (req, res, next) => {
-		throw new ApiError("Route not found", 404);
-	}),
+  "*",
+  catchAsync(async (req, res, next) => {
+    throw new ApiError("Route not found", 404);
+  }),
 );
 
 // Global error handler
@@ -75,38 +79,38 @@ app.use(globalErrorHandler);
 
 // Sync the database and start the server
 (async () => {
-	// Check for environment-specific configurations
-	const isProduction = process.env.NODE_ENV === "production";
+  // Check for environment-specific configurations
+  const isProduction = process.env.NODE_ENV === "production";
 
-	if (isProduction) {
-		console.warn(
-			"Warning: Running in production mode. Avoid using force: true for database synchronization.",
-		);
-		try {
-			await sequelize.sync({ alter: true });
-			console.log("Database synced!");
+  if (isProduction) {
+    console.warn(
+      "Warning: Running in production mode. Avoid using force: true for database synchronization.",
+    );
+    try {
+      await sequelize.sync({ alter: true });
+      console.log("Database synced!");
 
-			// Start the server
+      // Start the server
 
-			app.listen(port, () => {
-				console.log(`clozagent server is running on port, ${port}`);
-			});
-		} catch (err) {
-			console.log("Error syncing", err);
-		}
-	} else {
-		try {
-			// await sequelize.sync({ force: true });
-			await sequelize.sync({ alter: true });
-			console.log("Database synced!");
+      app.listen(port, () => {
+        console.log(`clozagent server is running on port, ${port}`);
+      });
+    } catch (err) {
+      console.log("Error syncing", err);
+    }
+  } else {
+    try {
+      // await sequelize.sync({ force: true });
+      await sequelize.sync({ alter: true });
+      console.log("Database synced!");
 
-			// Start the server
+      // Start the server
 
-			app.listen(port, () => {
-				console.log(`Server is running on port, ${port}`);
-			});
-		} catch (err) {
-			console.log("Error syncing", err);
-		}
-	}
+      app.listen(port, () => {
+        console.log(`Server is running on port, ${port}`);
+      });
+    } catch (err) {
+      console.log("Error syncing", err);
+    }
+  }
 })();

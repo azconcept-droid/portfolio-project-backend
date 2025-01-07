@@ -16,6 +16,8 @@ const router = require("express").Router();
  *      200:
  *        description: User logged in successfully...
  */
-router.route("/user/dashboard").get(authentication, restrictTo("end_user"), dashboard);
+router
+  .route("/user/dashboard")
+  .get(authentication, restrictTo("end_user"), dashboard);
 
 module.exports = router;

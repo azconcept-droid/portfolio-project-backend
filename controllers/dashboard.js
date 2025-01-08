@@ -44,7 +44,7 @@ const dashboard = catchAsync(async (req, res, next) => {
 
   return res.status(200).json({
     status: "success",
-    message: `Welcome ${result.firstName}, to your dashboard`,
+    message: `Hi 👋 ${result.firstName}, welcome to your dashboard!`,
     data: result,
   });
 });

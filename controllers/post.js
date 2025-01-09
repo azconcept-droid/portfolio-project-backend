@@ -45,6 +45,20 @@ const getPosts = catchAsync(async (req, res, next) => {
   const size = req.query.size || 10;
 
   const { rows, count } = await post.findAndCountAll({
+    include: [      {
+        model: user,
+        attributes: {
+          exclude: [
+            "resetPasswordToken",
+            "resetPasswordExpires",
+            "password",
+            "createdAt",
+            "updatedAt",
+            "deletedAt",
+          ],
+        },
+      },
+    ],
     order: [["createdAt", "DESC"]],
     limit: size,
     offset: (page - 1) * size,

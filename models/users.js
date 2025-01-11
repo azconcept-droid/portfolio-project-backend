@@ -163,6 +163,11 @@ const user = sequelize.define(
       defaultValue: "",
       allowNull: true,
     },
+    state: {
+      type: DataTypes.STRING,
+      defaultValue: "",
+      allowNull: true,
+    },
     isVerified: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,

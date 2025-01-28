@@ -1,3 +1,5 @@
+const ApiError = require("../utils/apiError");
+
 const restrictTo = (...userType) => {
   const checkPermission = (req, res, next) => {
     if (!userType.includes(req.user.userType)) {

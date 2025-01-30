@@ -28,22 +28,22 @@ const post = sequelize.define(
       defaultValue: false,
     },
     status: {
-			type: DataTypes.ENUM("available", "processing", "rented"),
-			allowNull: false,
-			defaultValue: "available",
-			validate: {
-				notNull: {
-					msg: "Status cannot be null",
-				},
-				notEmpty: {
-					msg: "Status cannot be empty",
-				},
-				isIn: {
-					args: [["available", "processing", "rented"]],
-					msg: "Availability status must be one of: 'available', 'rented', 'processing'",
-				},
-			},
-		},
+      type: DataTypes.ENUM("available", "processing", "rented"),
+      allowNull: false,
+      defaultValue: "available",
+      validate: {
+        notNull: {
+          msg: "Status cannot be null",
+        },
+        notEmpty: {
+          msg: "Status cannot be empty",
+        },
+        isIn: {
+          args: [["available", "processing", "rented"]],
+          msg: "Availability status must be one of: 'available', 'rented', 'processing'",
+        },
+      },
+    },
     videoUrl: {
       type: DataTypes.STRING,
       defaultValue: "",

@@ -1,4 +1,4 @@
-require('dotenv').config({ path: `${process.cwd()}/.env`})
+require("dotenv").config({ path: `${process.cwd()}/.env` });
 
 module.exports = {
   development: {
@@ -7,7 +7,7 @@ module.exports = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
-    dialect: 'postgres',
-    seederStorage: 'sequelize',
-  }
-}
+    dialect: "postgres",
+    seederStorage: "sequelize",
+  },
+};

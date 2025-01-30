@@ -8,15 +8,8 @@ const post = require("../models/posts");
 const blog = require("../models/blogs");
 
 const createPost = catchAsync(async (req, res, next) => {
-  const {
-    postImageUrl,
-    property,
-    price,
-    city,
-    state,
-    country,
-    videoUrl,
-  } = req.body;
+  const { postImageUrl, property, price, city, state, country, videoUrl } =
+    req.body;
 
   const newPost = await post.create({
     createdBy: req.user.id,
@@ -36,7 +29,7 @@ const createPost = catchAsync(async (req, res, next) => {
   return res.status(200).json({
     status: "success",
     message: "Post created successfully,",
-    data: newPost
+    data: newPost,
   });
 });
 
@@ -45,7 +38,8 @@ const getPosts = catchAsync(async (req, res, next) => {
   const size = req.query.size || 10;
 
   const { rows, count } = await post.findAndCountAll({
-    include: [      {
+    include: [
+      {
         model: user,
         attributes: {
           exclude: [
@@ -63,9 +57,7 @@ const getPosts = catchAsync(async (req, res, next) => {
     limit: size,
     offset: (page - 1) * size,
     attributes: {
-      exclude: [
-        "deletedAt",
-      ],
+      exclude: ["deletedAt"],
     },
   });
 
@@ -89,9 +81,7 @@ const getPostsByUserId = catchAsync(async (req, res, next) => {
     limit: size,
     offset: (page - 1) * size,
     attributes: {
-      exclude: [
-        "deletedAt",
-      ],
+      exclude: ["deletedAt"],
     },
   });
 
@@ -112,9 +102,7 @@ const getPostById = catchAsync(async (req, res, next) => {
 
   const result = await post.findByPk(id, {
     attributes: {
-      exclude: [
-        "deletedAt",
-      ],
+      exclude: ["deletedAt"],
     },
   });
 
@@ -131,16 +119,9 @@ const getPostById = catchAsync(async (req, res, next) => {
 
 const updatePost = catchAsync(async (req, res, next) => {
   const id = req.params.id;
-  const {
-    postImageUrl,
-    property,
-    price,
-    city,
-    state,
-    country,
-    videoUrl,
-  } = req.body;
-  // update builder info
+  const { postImageUrl, property, price, city, state, country, videoUrl } =
+    req.body;
+  // update post
   const [updatedRow] = await post.update(
     {
       postImageUrl,
@@ -187,6 +168,27 @@ const deletePostById = catchAsync(async (req, res, next) => {
   });
 });
 
+const approvePosts = catchAsync(async (req, res, next) => {
+  const { id, isVerified } = req.body;
+
+  if (isVerified === true) {
+    // update post status
+    await post.update(
+      {
+        isVerified,
+      },
+      {
+        where: { id },
+      },
+    );
+  }
+
+  return res.json({
+    status: "success",
+    message: `post ${isVerified === true ? "approved" : "rejected"}`,
+  });
+});
+
 module.exports = {
   createPost,
   getPosts,
@@ -194,4 +196,5 @@ module.exports = {
   getPostById,
   updatePost,
   deletePostById,
+  approvePosts,
 };
